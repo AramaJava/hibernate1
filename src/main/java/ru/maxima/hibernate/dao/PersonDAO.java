@@ -1,10 +1,10 @@
-package ru.maxima.springwebmvc.dao;
+package ru.maxima.hibernate.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.maxima.springwebmvc.entity.Person;
+import ru.maxima.hibernate.entity.Person;
 import java.util.List;
 import java.util.Optional;
 

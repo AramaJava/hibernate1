@@ -1,4 +1,4 @@
-package ru.maxima.springwebmvc.entity;
+package ru.maxima.hibernate.entity;
 
 import jakarta.validation.constraints.*;
 

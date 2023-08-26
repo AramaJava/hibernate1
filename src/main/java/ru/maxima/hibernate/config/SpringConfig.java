@@ -1,4 +1,4 @@
-package ru.maxima.springwebmvc.config;
+package ru.maxima.hibernate.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 
 @Configuration
-@ComponentScan("ru.maxima.springwebmvc")
+@ComponentScan("ru.maxima.hibernate")
 @EnableWebMvc
 @PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {

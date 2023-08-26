@@ -1,13 +1,13 @@
-package ru.maxima.springwebmvc.controller;
+package ru.maxima.hibernate.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.maxima.springwebmvc.dao.PersonDAO;
-import ru.maxima.springwebmvc.entity.Person;
-import ru.maxima.springwebmvc.util.PersonValidator;
+import ru.maxima.hibernate.dao.PersonDAO;
+import ru.maxima.hibernate.entity.Person;
+import ru.maxima.hibernate.util.PersonValidator;
 
 import java.util.Collections;
 import java.util.List;
