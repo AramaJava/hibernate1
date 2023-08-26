@@ -33,7 +33,7 @@ public class PersonDAO {
     public List<Person> index() {
 
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Person p", Person.class).getResultList();
+        return session.createQuery("From Person p", Person.class).getResultList();
     }
 
     @Transactional(readOnly = true)

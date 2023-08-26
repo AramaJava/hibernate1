@@ -35,10 +35,12 @@ public class Person {
     //Russia, Moscow - , 123456   -   ^\d{6,}$
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6,}",
             message = "Адрес должен быть в формате: Country, City, Индекс (6 цифр)")
+    @Column(name="address")
     private String address;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Email(message = "почта указана неверно")
+    @Column(name="email")
     private String email;
 
     public Person() {
