@@ -10,8 +10,6 @@ import ru.maxima.hibernate1.entity.Person;
 import ru.maxima.hibernate1.util.PersonValidator;
 
 
-
-
 /**
  * @author AramaJava 26.07.2023
  */
@@ -83,7 +81,7 @@ public class PeopleController {
         return "redirect:/people";
     }
 
-/*    @GetMapping("/search")
+ /*   @GetMapping("/search")
     public String findByName(Model model, @RequestParam("keyword") String keyword) {
         List<Person> searchResult;
         if (keyword != null && !keyword.isEmpty()) {
