@@ -20,8 +20,6 @@ import java.util.List;
  */
 
 
-
-
 @Component
 public class PersonDAO {
 
@@ -33,12 +31,15 @@ public class PersonDAO {
     }
     @Transactional(readOnly = true)
     public List<Person> index() {
+
         Session session = sessionFactory.getCurrentSession();
-        return (List<Person>) session.createQuery("select p from Person p").getResultList();
+
+        return session.createQuery("select p from Person p", Person.class).getResultList();
     }
 
     @Transactional(readOnly = true)
     public Person show(int id) {
+
         return sessionFactory.getCurrentSession().get(Person.class, id);
     }
 
