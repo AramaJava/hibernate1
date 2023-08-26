@@ -1,16 +1,15 @@
-package ru.maxima.hibernate.controller;
+package ru.maxima.hibernate1.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.maxima.hibernate.dao.PersonDAO;
-import ru.maxima.hibernate.entity.Person;
-import ru.maxima.hibernate.util.PersonValidator;
+import ru.maxima.hibernate1.dao.PersonDAO;
+import ru.maxima.hibernate1.entity.Person;
+import ru.maxima.hibernate1.util.PersonValidator;
 
-import java.util.Collections;
-import java.util.List;
+
 
 
 /**
@@ -84,7 +83,7 @@ public class PeopleController {
         return "redirect:/people";
     }
 
-    @GetMapping("/search")
+/*    @GetMapping("/search")
     public String findByName(Model model, @RequestParam("keyword") String keyword) {
         List<Person> searchResult;
         if (keyword != null && !keyword.isEmpty()) {
@@ -95,7 +94,7 @@ public class PeopleController {
         model.addAttribute("searchResult", searchResult);
         model.addAttribute("keyword", keyword);
         return "people/search";
-    }
+    }*/
 
 }
 

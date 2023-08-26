@@ -1,23 +1,34 @@
-package ru.maxima.hibernate.entity;
+package ru.maxima.hibernate1.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 
 /**
  * @author AramaJava 26.07.2023
  */
-
+@Entity
+@Table(name="person")
 public class Person {
+
+    @Id
+    @Column(name="id")
     private int id;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 3, max = 100, message = "ФИО должно быть от 3 до 100 символов")
+    @Column(name="name")
     private String name;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 3, max = 100, message = "ФИО должно быть от 3 до 100 символов")
+    @Column(name="surname")
     private String surname;
 
     @Min(value = 16, message = "Возраст больше 16")
+    @Column(name="age")
     private int age;
 
     // Страна, Город, Индекс (состоит из 6 цифр)
@@ -88,4 +99,5 @@ public class Person {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

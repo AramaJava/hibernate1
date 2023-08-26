@@ -1,4 +1,4 @@
-package ru.maxima.hibernate.util;
+package ru.maxima.hibernate1.util;
 
 
 import jakarta.annotation.Nonnull;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.maxima.hibernate.dao.PersonDAO;
-import ru.maxima.hibernate.entity.Person;
+import ru.maxima.hibernate1.dao.PersonDAO;
+import ru.maxima.hibernate1.entity.Person;
 
 /**
  * @author AramaJava 05.08.2023
@@ -33,11 +33,11 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
         // посмотреть, есть ли в базе данных человек с такой же почтой и с id отличным от текущего
 
-        if (personDAO.show(person.getEmail()).isPresent()) {
+       /* if (personDAO.show(person.getEmail()).isPresent()) {
             Person founded = (personDAO.show(person.getEmail())).get();
             if (founded.getId() != person.getId()) {
                 errors.rejectValue("email", "", "Эта почта уже используется!");
             }
-        }
+        }*/
     }
 }

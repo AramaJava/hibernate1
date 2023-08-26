@@ -1,4 +1,4 @@
-package ru.maxima.hibernate.config;
+package ru.maxima.hibernate1.config;
 
 import jakarta.annotation.Nonnull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;

@@ -1,11 +1,11 @@
-package ru.maxima.hibernate.controller;
+package ru.maxima.hibernate1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.maxima.hibernate.dao.PersonDAO;
-import ru.maxima.hibernate.entity.Person;
+import ru.maxima.hibernate1.dao.PersonDAO;
+import ru.maxima.hibernate1.entity.Person;
 
 /**
  * @author AramaJava 05.08.2023
