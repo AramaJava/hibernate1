@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.maxima.hibernate1.dao.PersonDAO;
 import ru.maxima.hibernate1.entity.Person;
 import ru.maxima.hibernate1.util.PersonValidator;
-
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author AramaJava 26.07.2023
@@ -81,8 +82,9 @@ public class PeopleController {
         return "redirect:/people";
     }
 
- /*   @GetMapping("/search")
-    public String findByName(Model model, @RequestParam("keyword") String keyword) {
+
+    @GetMapping("/search-by-name")
+    public String search(Model model, @RequestParam("keyword") String keyword) {
         List<Person> searchResult;
         if (keyword != null && !keyword.isEmpty()) {
             searchResult = personDAO.findByName(keyword);
@@ -91,10 +93,20 @@ public class PeopleController {
         }
         model.addAttribute("searchResult", searchResult);
         model.addAttribute("keyword", keyword);
-        return "people/search";
-    }*/
+        return "people/searchName";
+    }
+
+    @GetMapping("/search-by-id")
+    public String search(Model model, @RequestParam("id") int id) {
+        List<Person> searchResult;
+        if (id > 0) {
+            searchResult = personDAO.findById(id);
+        } else {
+            searchResult = Collections.emptyList();
+        }
+        model.addAttribute("searchResult", searchResult);
+        model.addAttribute("id", id);
+        return "people/searchId";
+    }
 
 }
-
-
-

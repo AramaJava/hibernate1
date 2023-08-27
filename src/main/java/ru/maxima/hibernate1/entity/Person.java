@@ -7,44 +7,44 @@ import jakarta.validation.constraints.*;
  * @author AramaJava 26.07.2023
  */
 @Entity
-@Table(name="person")
+@Table(name = "person")
 public class Person {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 3, max = 100, message = "ФИО должно быть от 3 до 100 символов")
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 3, max = 100, message = "ФИО должно быть от 3 до 100 символов")
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
     @Min(value = 16, message = "Возраст больше 16")
-    @Column(name="age")
+    @Column(name = "age")
     private int age;
 
     // Страна, Город, Индекс (состоит из 6 цифр)
     //Russia, Moscow - , 123456   -   ^\d{6,}$
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6,}",
             message = "Адрес должен быть в формате: Country, City, Индекс (6 цифр)")
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     @Email(message = "почта указана неверно")
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
     public Person() {
     }
 
-    public Person(String name, String surname, int age, String email, String  address) {
+    public Person(String name, String surname, int age, String email, String address) {
         this.name = name;
         this.surname = surname;
         this.age = age;

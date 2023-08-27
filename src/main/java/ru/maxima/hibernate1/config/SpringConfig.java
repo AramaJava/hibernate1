@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -37,7 +36,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
 
-
     private final ApplicationContext applicationContext;
 
     private final Environment environment;
@@ -47,7 +45,6 @@ public class SpringConfig implements WebMvcConfigurer {
 
         this.applicationContext = applicationContext;
         this.environment = environment;
-
     }
 
     @Bean
@@ -63,14 +60,16 @@ public class SpringConfig implements WebMvcConfigurer {
     }
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
+
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan("ru.maxima.hibernate1");
-        sessionFactoryBean.setHibernateProperties(hibernateProperties());
+
         return sessionFactoryBean;
     }
 
     private Properties hibernateProperties() {
+
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
@@ -81,18 +80,21 @@ public class SpringConfig implements WebMvcConfigurer {
 
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
+
         HibernateTransactionManager platformTransactionManager = new HibernateTransactionManager();
         platformTransactionManager.setSessionFactory(sessionFactory().getObject());
+
         return platformTransactionManager;
     }
 
-    @Bean
+/*    @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
-    }
+    }*/
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
+
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
@@ -100,6 +102,7 @@ public class SpringConfig implements WebMvcConfigurer {
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(true);
+
         return templateResolver;
     }
 
@@ -108,6 +111,7 @@ public class SpringConfig implements WebMvcConfigurer {
 
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
+
         return templateEngine;
     }
 
@@ -117,6 +121,7 @@ public class SpringConfig implements WebMvcConfigurer {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
+
         return viewResolver;
     }
 }

@@ -1,18 +1,13 @@
 package ru.maxima.hibernate1.dao;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maxima.hibernate1.entity.Person;
 
 import java.util.List;
-
 
 
 /**
@@ -29,56 +24,31 @@ public class PersonDAO {
     public PersonDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     @Transactional(readOnly = true)
     public List<Person> index() {
-
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("From Person p", Person.class).getResultList();
+        return sessionFactory.getCurrentSession().createQuery("From Person", Person.class).getResultList();
     }
 
     @Transactional(readOnly = true)
     public Person show(int id) {
-
         return sessionFactory.getCurrentSession().get(Person.class, id);
     }
 
-
-    // перегрузил метод show еще и через емайл
-
-    public  Person show(String email)  {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Person> cr = cb.createQuery(Person.class);
-
-        Root<Person> root = cr.from(Person.class);
-        cr.select(root).where(cb.equal(root.get("email"), email));  //here you pass a class field, not a table column (in this example they are called the same)
-
-        Query<Person> query = session.createQuery(cr);
-        query.setMaxResults(1);
-        List<Person> result = query.getResultList();
-        return result.get(0);
-    }
-
-
-
-
     @Transactional
     public void save(Person person) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(person);
+        sessionFactory.getCurrentSession().persist(person);
     }
 
     @Transactional
-    public void update (int id, Person personFromForm) {
+    public void update(int id, Person updatedPerson) {
         Session session = sessionFactory.getCurrentSession();
         Person personBeUpdated = session.get(Person.class, id);
+        personBeUpdated.setName(updatedPerson.getName());
+        personBeUpdated.setSurname(updatedPerson.getSurname());
+        personBeUpdated.setAge(updatedPerson.getAge());
+        personBeUpdated.setEmail(updatedPerson.getEmail());
 
-        personBeUpdated.setName(personFromForm.getName());
-        personBeUpdated.setSurname(personFromForm.getSurname());
-        personBeUpdated.setAge(personFromForm.getAge());
-        personBeUpdated.setEmail(personFromForm.getEmail());
-
-        session.persist(personBeUpdated);
     }
 
     @Transactional
@@ -87,10 +57,17 @@ public class PersonDAO {
         session.remove(session.get(Person.class, id));
     }
 
-  /*  @Transactional
-    public  List<Person> findByName(String keyword) {
-        String sql = "select * from person p where p.name like ?";
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Person.class),keyword+'%');
-    }*/
+    @Transactional
+    public List<Person> findByName(String keyword) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "From Person p where p.name like '%" + keyword + "%'";
+        return session.createQuery(sql, Person.class).getResultList();
+    }
 
+    @Transactional
+    public List<Person> findById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "From Person p where p.id = " + id ;
+        return session.createQuery(sql, Person.class).getResultList();
+    }
 }
