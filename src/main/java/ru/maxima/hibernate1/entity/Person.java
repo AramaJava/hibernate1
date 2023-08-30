@@ -3,6 +3,8 @@ package ru.maxima.hibernate1.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 /**
  * @author AramaJava 26.07.2023
  */
@@ -40,6 +42,9 @@ public class Person {
     @Email(message = "почта указана неверно")
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 
     public Person() {
     }
