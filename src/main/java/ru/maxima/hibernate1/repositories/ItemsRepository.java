@@ -17,5 +17,13 @@ public interface ItemsRepository extends JpaRepository <Item, Integer>{
     //person.getItems()
     List<Item> findByOwner(Person person);
 
+    List<Item> findByItemNameStartingWith(String startingWith);
+
+    List<Item> findByItemNameEndingWith(String endingWith);
+
+    List<Item> findByOwnerOrderById(Person person);
+
+    List<Item> findByItemNameOrderByItemName(String itemName);
+
 
 }
