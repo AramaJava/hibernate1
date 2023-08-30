@@ -1,15 +1,17 @@
 package ru.maxima.hibernate1.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.maxima.hibernate1.dao.PersonDAO;
 import ru.maxima.hibernate1.entity.Person;
+import ru.maxima.hibernate1.services.PeopleService;
 import ru.maxima.hibernate1.util.PersonValidator;
-import java.util.Collections;
+
 import java.util.List;
+
 
 /**
  * @author AramaJava 26.07.2023
@@ -19,24 +21,28 @@ import java.util.List;
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonDAO personDAO;
+    @Autowired
+    private final PeopleService peopleService;
 
+    @Autowired
     private final PersonValidator personValidator;
 
-    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
-        this.personDAO = personDAO;
+
+    @Autowired
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
+        this.peopleService = peopleService;
         this.personValidator = personValidator;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("people", personDAO.index());
+        model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     private String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/show";
     }
 
@@ -52,13 +58,13 @@ public class PeopleController {
 
         if (bindingResult.hasErrors()) return "people/new";
 
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/edit";
     }
 
@@ -72,13 +78,13 @@ public class PeopleController {
             return "people/edit";
         }
 
-        personDAO.update(id, person);
+        peopleService.update(id, person);
         return "redirect:/people";
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") int id) {
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 
@@ -87,9 +93,9 @@ public class PeopleController {
     public String search(Model model, @RequestParam("keyword") String keyword) {
         List<Person> searchResult;
         if (keyword != null && !keyword.isEmpty()) {
-            searchResult = personDAO.findByName(keyword);
+            searchResult = peopleService.findAnyByName(keyword);
         } else {
-            searchResult = Collections.emptyList();
+            searchResult = null;
         }
         model.addAttribute("searchResult", searchResult);
         model.addAttribute("keyword", keyword);
@@ -98,11 +104,11 @@ public class PeopleController {
 
     @GetMapping("/search-by-id")
     public String search(Model model, @RequestParam("id") int id) {
-        List<Person> searchResult;
+        Person searchResult;
         if (id > 0) {
-            searchResult = personDAO.findById(id);
+            searchResult = peopleService.findOne(id);
         } else {
-            searchResult = Collections.emptyList();
+            searchResult = null;
         }
         model.addAttribute("searchResult", searchResult);
         model.addAttribute("id", id);
