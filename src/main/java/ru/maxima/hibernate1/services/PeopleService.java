@@ -61,4 +61,9 @@ public class PeopleService {
         return foundPerson.orElse(null);
     }
 
+    @Transactional
+    public void test() {
+        System.out.println("Testing here with debug. Inside Hibernate Transaction");
+    }
+
 }

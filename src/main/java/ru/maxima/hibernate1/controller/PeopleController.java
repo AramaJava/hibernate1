@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maxima.hibernate1.entity.Person;
+import ru.maxima.hibernate1.services.ItemService;
 import ru.maxima.hibernate1.services.PeopleService;
 import ru.maxima.hibernate1.util.PersonValidator;
 
@@ -21,22 +22,27 @@ import java.util.List;
 @RequestMapping("/people")
 public class PeopleController {
 
-    @Autowired
     private final PeopleService peopleService;
-
-    @Autowired
+    private final ItemService itemService;
     private final PersonValidator personValidator;
 
 
     @Autowired
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
+    public PeopleController(PeopleService peopleService, ItemService itemService, PersonValidator personValidator) {
         this.peopleService = peopleService;
+        this.itemService = itemService;
         this.personValidator = personValidator;
     }
 
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("Monitor 32");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
+
         return "people/index";
     }
 

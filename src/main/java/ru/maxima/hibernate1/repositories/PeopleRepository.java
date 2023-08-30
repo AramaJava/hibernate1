@@ -15,4 +15,15 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
     Optional<List<Person>> findPersonByNameContainsIgnoreCase(String keyword);
 
     Optional<Person> findPersonByEmailIgnoreCase(String email);
+
+    List<Person> findByName(String name);
+
+    List<Person> findByNameOrderByAge(String name);
+
+    List<Person> findByEmail(String email);
+
+    List<Person> findByNameStartingWith(String startingWith);
+
+    List<Person> findByNameOrEmail(String name, String email);
+
 }
